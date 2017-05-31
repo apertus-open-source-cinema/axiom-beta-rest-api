@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"net"
 	"Schema/AxiomDaemon"
-	"github.com/google/flatbuffers/go"
+	flatbuffers "github.com/google/flatbuffers/go"
 )
 
-type struct Client{
+type Client struct{
 
 	/* This segments needs to be converted in Golang
 	std::string socketPath;
