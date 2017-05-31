@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"sys/un.h"
-	"sys/socket.h"
-	"../Schema/axiom_daemon_generated.h"
+	"net"
+	"Schema/AxiomDaemon"
+	"github.com/google/flatbuffers/go"
 )
 
 type struct Client{
