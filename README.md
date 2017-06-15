@@ -5,4 +5,4 @@ This repository is for AXIOM beta REST Interface project which is being develope
 
 ## Current Tasks
 - Working on client.go App for getting connection with the daemon server.
-- Understanding docker to run the application in a docker container.
+- Understanding docker to _build_ the application in a docker container.
