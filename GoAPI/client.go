@@ -1,37 +1,41 @@
 package main
 
 import (
-	"io"
-	"log"
-	"net"
-	"time"
+    "fmt"
+    "net"
+    "Schema/AxiomDaemon"
+    flatbuffers "github.com/google/flatbuffers/go"
+    "log"
 )
 
-func reader(r io.Reader) {
-	buf := make([]byte, 1024)
-	for {
-		n, err := r.Read(buf[:])
-		if err != nil {
-			return
-		}
-		println("Client got:", string(buf[0:n]))
-	}
-}
+type Client struct{
 
-func main() {
-	c, err := net.Dial("unixgram", "/home/anudit/beta-software/axiom_beta_control_daemon/build/axiom_daemon")
-	if err != nil {
-		panic(err)
-	}
-	defer c.Close()
+    func reader(r io.Reader) {
+        buf := make([]byte, 1024)
+        for {
+            n, err := r.Read(buf[:])
+            if err != nil {
+                return
+            }
+            println("Client got:", string(buf[0:n]))
+        }
+    }
 
-	go reader(c)
-	for {
-		_, err := c.Write([]byte("test"))
-		if err != nil {
-			log.Fatal("write error:", err)
-			break
-		}
-		time.Sleep(1e9)
-	}
+    func main() {
+        c, err := net.Dial("unixgram", "/tmp/axiom_daemon")
+        if err != nil {
+            panic(err)
+        }
+        defer c.Close()
+
+        go reader(c)
+        for {
+            _, err := c.Write([]byte("hi"))
+            if err != nil {
+                log.Fatal("write error:", err)
+                break
+            }
+            time.Sleep(1e9)
+        }
+    }
 }
