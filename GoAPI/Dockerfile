@@ -1,11 +1,16 @@
-FROM iron/go:dev
+FROM golang:1.8
 
-WORKDIR /app
+RUN mkdir -p /go/src/client-app
 
+WORKDIR /go/src/client-app
 
-ENV SRC_DIR=/go/src/github.com/apertus-open-source-cinema/axiom-beta-rest-interface/
+COPY . /go/src/client-app
 
-ADD . $SRC_DIR
+RUN go-wrapper download
+RUN go-wrapper install
 
-RUN cd $SRC_DIR; go build -o client; cp client /app/
-ENTRYPOINT ["./client"]
+ENV PORT 8080
+
+EXPOSE 8080
+
+CMD ["client", "run"]
