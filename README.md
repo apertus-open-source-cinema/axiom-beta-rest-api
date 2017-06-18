@@ -11,8 +11,8 @@ This repository is for AXIOM beta REST Interface project which is being develope
 ## Contents:
 - [Requirements](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/blob/develop/README.md#requirements)
 - [Getting Started](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/blob/develop/README.md#getting-started)
-- [Setting Development Environment](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/blob/develop/README.md#usage)
-- [Usage](#)
+- [Setting Development Environment](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/tree/develop#setting-development-environment)
+- [Usage](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/tree/develop#usage)
 
 ### Requirements:
 * git
