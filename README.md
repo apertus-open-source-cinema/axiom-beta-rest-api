@@ -52,15 +52,12 @@ chmod +x axiom_daemon
 ```bash
 ./axiom_daemon
 ```
-2. Now run the client app, cd into _WORKDIR/beta-software/axiom_beta_control_daemon/GoAPI_ and run the following commands
+2. Now run the client app, cd into _WORKDIR/beta-software/axiom_beta_control_daemon/GoAPI_ and run the following go command.
 ```bash
 go run client.go
 ```
 
-
-
-
-
+NOTE: Client app is still in alpha stage, the daemon server will crash as only test data is being sent right now.
 
 
 
