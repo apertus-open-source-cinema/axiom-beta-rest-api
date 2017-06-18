@@ -9,10 +9,12 @@ This repository is for AXIOM beta REST Interface project which is being develope
 **fig:** _Flow of requests/responses with REST API interface_
 
 ## Contents:
-- [Requirements](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/tree/develop#requirements)
-- [Getting Started](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/tree/develop/README.md#getting-started)
-- [Setting Development Environment](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/tree/develop#setting-development-environment)
-- [Usage](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/tree/develop#usage)
+* [Requirements](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/tree/develop#requirements)
+* [Getting Started](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/tree/develop#getting-started)
+* [Setting Development Environment](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/tree/develop#setting-development-environment)
+    * [Qt Creator](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/tree/develop#qt-creator)
+    * [Visual Studio Code](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/tree/develop#visual-studio-code)
+* [Usage](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/tree/develop#usage)
 
 ### Requirements:
 You will need these following packages/softwares in order to utilise the Client app.
