@@ -9,8 +9,8 @@ This repository is for AXIOM beta REST Interface project which is being develope
 **fig:** _Flow of requests/responses with REST API interface_
 
 ## Contents:
-- [Requirements](#)
-- [Getting Started](#)
+- [Requirements](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/blob/develop/README.md#requirements)
+- [Getting Started](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/blob/develop/README.md#getting-started)
 - [Installation](#)
 
 ### Requirements
