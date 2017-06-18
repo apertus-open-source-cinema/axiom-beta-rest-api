@@ -9,8 +9,8 @@ This repository is for AXIOM beta REST Interface project which is being develope
 **fig:** _Flow of requests/responses with REST API interface_
 
 ## Contents:
-- [Requirements](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/blob/develop/README.md#requirements)
-- [Getting Started](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/blob/develop/README.md#getting-started)
+- [Requirements](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/tree/develop#requirements)
+- [Getting Started](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/tree/develop/README.md#getting-started)
 - [Setting Development Environment](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/tree/develop#setting-development-environment)
 - [Usage](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/tree/develop#usage)
 
@@ -79,4 +79,4 @@ Now follow these steps to add client app to Visual Studio Code:
 2. Now start the debugger in order to invoke the _daemon-server_.
 3. Similarly, on Visual Studio Code, start debugging on _client.go_ file present in _/beta-software/axiom_beta_control_daemon/GoAPI_ directory.
 
-NOTE: Client app is still in alpha stage, the daemon server will crash as only test data is being sent right now.
+NOTE: Client app is still in alpha stage, the _daemon-server_ would crash if right data is not sent to it.
