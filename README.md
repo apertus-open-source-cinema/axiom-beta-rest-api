@@ -36,7 +36,7 @@ git clone https://github.com/apertus-open-source-cinema/beta-software.git
 ```bash
 git clone -b develop https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface.git  
 ```
-to add _client.go_ file to your system and copy this [client.go](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/blob/develop/GoAPI/client.go) into _WORKDIR/beta-software/axiom_beta_control_daemon/GoAPI_ directory
+To add _client.go_ file to your system and copy this [client.go](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/blob/develop/GoAPI/client.go) into _WORKDIR/beta-software/axiom_beta_control_daemon/GoAPI_ directory
 
 ### Setting Development Environment
 
@@ -64,7 +64,7 @@ Before proceeding make sure,
 ```
 These setting are used to overwrite the default settings.
 
-* You must have the _GO_ extension installed, for this press _ctrl+shift+X_ to bring up the _EXTENSIONS_ search bar on the right side of the IDE, now type "GO", look for _GO_ extension by _Lukehoban_. After installing the extension, restart the IDE.
+* You must have the _GO_ extension installed, for this press _ctrl+shift+X_ to bring up the _EXTENSIONS_ search bar on the left side of the IDE, now type "GO", look for _GO_ extension by _Lukehoban_. After installing the extension, restart the IDE.
 
 * You should have the debugger installed, mostly [Delve](https://github.com/derekparker/delve). This and other necessary plugins will be installed automatically when you will start debugging process.
 
