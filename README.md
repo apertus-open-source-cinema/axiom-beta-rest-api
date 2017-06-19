@@ -41,13 +41,17 @@ To add _client.go_ file to your system and copy this [client.go](https://github.
 ### Setting Development Environment
 
 #### Qt Creator:
-1. After installing QtCreator IDE, run it and open a new Project/File, locate _CMakeLists.txt_ present in _WORKDIR/beta-software/axiom_beta_control_daemon_ directory.
+1. First of all, create a folder named _build_ into _WORKDIR/beta-software/axiom_beta_control_daemon_ directory.
+```bash
+mkdir WORKDIR/beta-software/axiom_beta_control_daemon/build 
+```
+2. Now run QtCreator IDE and open a new Project/File, locate _CMakeLists.txt_ present in _WORKDIR/beta-software/axiom_beta_control_daemon_ directory.
 
-2. Then on _Configure Project_ Window, under _Desktop Qt 5.9.X GCC 64bit_ kit click on _Details_ button, now select only _Debug_ and _Release_ kits. **Make sure to edit corresponding build path(s) for these kits** (Add _WORKDIR/beta-software/axiom_beta_control_daemon/build_ in this case.)
+3. Then on _Configure Project_ Window, under _Desktop Qt 5.9.X GCC 64bit_ kit click on _Details_ button, now select only _Debug_ and _Release_ kits. **Make sure to edit corresponding build path(s) for these kits** (Add _WORKDIR/beta-software/axiom_beta_control_daemon/build_ in this case.)
 
-2. Now go to _Build_ menu and _Run cmake_ within the IDE, keep observing _General Messages_ tab present on the bottom side of the IDE for any errors or warnings.
+4. Now go to _Build_ menu and _Run cmake_ within the IDE, keep observing _General Messages_ tab present on the bottom side of the IDE for any errors or warnings.
 
-3. Then again go to _Build_ menu and click on _Build Project "axiom_daemon"_, for this keep observing _Issues_ tab for any errors, troubleshoot if required.
+5. Then again go to _Build_ menu and click on _Build Project "axiom_daemon"_, for this keep observing _Issues_ tab for any errors, troubleshoot if required.
 
 Now _daemon-server_ is ready to use, next we will configure _Visual Studio Code_ for running _client.go_ app. 
 
