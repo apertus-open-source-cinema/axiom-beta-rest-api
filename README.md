@@ -36,29 +36,29 @@ git clone https://github.com/apertus-open-source-cinema/beta-software.git
 ```bash
 git clone -b develop https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface.git  
 ```
-To add _client.go_ file to your system and copy this [client.go](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/blob/develop/GoAPI/client.go) into _WORKDIR/beta-software/axiom_beta_control_daemon/GoAPI_ directory
+To add `client.go` file to your system and copy this [client.go](https://github.com/apertus-open-source-cinema/axiom-beta-rest-interface/blob/develop/GoAPI/client.go) into _WORKDIR/beta-software/axiom_beta_control_daemon/GoAPI_ directory
 
 ### Setting Development Environment
 
 #### Qt Creator:
-1. First of all, create a folder named _build_ into _WORKDIR/beta-software/axiom_beta_control_daemon_ directory.
+1. First of all, create a folder named `build` into `WORKDIR/beta-software/axiom_beta_control_daemon_ directory`.
 ```bash
 mkdir WORKDIR/beta-software/axiom_beta_control_daemon/build 
 ```
-2. Now run QtCreator IDE and open a new Project/File, locate _CMakeLists.txt_ present in _WORKDIR/beta-software/axiom_beta_control_daemon_ directory.
+2. Now run QtCreator IDE and open a new Project/File, locate `CMakeLists.txt` present in `WORKDIR/beta-software/axiom_beta_control_daemon` directory.
 
-3. Then on _Configure Project_ Window, under _Desktop Qt 5.9.X GCC 64bit_ kit click on _Details_ button, now select only _Debug_ and _Release_ kits. **Make sure to edit corresponding build path(s) for these kits** (Add _WORKDIR/beta-software/axiom_beta_control_daemon/build_ in this case.)
+3. Then on _Configure Project_ Window, under _Desktop Qt 5.9.X GCC 64bit_ kit click on _Details_ button, now select only _Debug_ and _Release_ kits. **Make sure to edit corresponding build path(s) for these kits** (Add `WORKDIR/beta-software/axiom_beta_control_daemon/build` in this case.)
 
 4. Now go to _Build_ menu and _Run cmake_ within the IDE, keep observing _General Messages_ tab present on the bottom side of the IDE for any errors or warnings.
 
 5. Then again go to _Build_ menu and click on _Build Project "axiom_daemon"_, for this keep observing _Issues_ tab for any errors, troubleshoot if required.
 
-Now _daemon-server_ is ready to use, next we will configure _Visual Studio Code_ for running _client.go_ app. 
+Now _daemon-server_ is ready to use, next we will configure _Visual Studio Code_ for running `client.go` app. 
 
 
 #### Visual Studio Code:
 Before proceeding make sure,
-* To set your working directory into $GOPATH of the IDE, in order to do this press _Ctrl+,_ to bring up _user settings_, this will open settings.json file. On the right space add the following code:
+* To set your working directory into $GOPATH of the IDE, in order to do this press _Ctrl+,_ to bring up _user settings_, this will open `settings.json` file. On the right space add the following code:
 
 ```json
 {
@@ -72,17 +72,38 @@ These setting are used to overwrite the default settings.
 
 * You should have the debugger installed, mostly [Delve](https://github.com/derekparker/delve). This and other necessary plugins will be installed automatically when you will start debugging process.
 
+**Note:** GOPATH set using the `go.gopath` setting in Visual Studio Code is not readable by the debugger in the Go extension. Therefore, if you do use the `go.gopath` setting, remember to pass the same in the `env` property of the `launch.json` as an environment variable. You can do this by updating your `launch.json` file as:
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "remotePath": "",
+            "port": 2345,
+            "host": "127.0.0.1",
+            "program": "${fileDirname}",
+            "env": {"GOPATH": "WORKDIR/beta-software/axiom_beta_control_daemon/build/3rdParty/flatbuffers/src/flatbuffers_project"},
+            "args": [],
+            "showLog": true
+        }
+    ]
+}
+```
 Now follow these steps to add client app to Visual Studio Code:
 
 1. Open _beta software_ folder and add this to your project tree.
-2. Locate client.go file, go to _/beta-software/axiom_beta_control_daemon/GoAPI_ directory.
-3. Double click on client.go file to open it and start debugging by pressing _F5_. You will be asked to install missing plugins, click _Install All_, wait for the process to complete.
+2. Locate `client.go` file, go to `/beta-software/axiom_beta_control_daemon/GoAPI` directory.
+3. Double click on `client.go` file to open it and start debugging by pressing _F5_. You will be asked to install missing plugins, click _Install All_, wait for the process to complete.
 
 
 ### Usage
 
-1. Open Qt Creator, locate _server.h_ file in _/beta-software/axiom_beta_control_daemon/Connection_ directory and set break point on Line #80.
+1. Open Qt Creator, locate `server.h` file in `/beta-software/axiom_beta_control_daemon/Connection` directory and set break point on Line [#80](https://github.com/apertus-open-source-cinema/beta-software/blob/master/axiom_beta_control_daemon/Connection/Server.h#L80)
 2. Now start the debugger in order to invoke the _daemon-server_.
-3. Similarly, on Visual Studio Code, start debugging on _client.go_ file present in _/beta-software/axiom_beta_control_daemon/GoAPI_ directory.
+3. Similarly, on Visual Studio Code, start debugging on `client.go` file present in `/beta-software/axiom_beta_control_daemon/GoAPI` directory.
 
-NOTE: Client app is still in alpha stage, the _daemon-server_ would crash if right data is not sent to it.
+**NOTE:** Client app is still in alpha stage, the _daemon-server_ would crash if right data is not sent to it.
