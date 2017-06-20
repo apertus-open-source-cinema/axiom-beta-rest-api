@@ -86,7 +86,7 @@ These setting are used to overwrite the default settings.
             "port": 2345,
             "host": "127.0.0.1",
             "program": "${fileDirname}",
-            "env": {"GOPATH": "WORKDIR/beta-software/axiom_beta_control_daemon/build/3rdParty/flatbuffers/src/flatbuffers_project"},
+            "env": {"GOPATH": "<YourWORKDIR>/beta-software/axiom_beta_control_daemon/build/3rdParty/flatbuffers/src/flatbuffers_project:<YourWORKDIR>/beta-software/axiom_beta_control_daemon/build"},
             "args": [],
             "showLog": true
         }
