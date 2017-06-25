@@ -31,7 +31,7 @@ it will serve as a foundation for future higher level GUIs/Apps that utilise the
 Illustration
 ------------
 
-![AXIOM beta REST connection](/Readme/AXIOM_fig.jpg)
+![AXIOM beta REST connection](/Readme/AXIOM_fig.png)
 **fig:** _Flow of requests/responses with REST API interface_
 Contents
 --------
