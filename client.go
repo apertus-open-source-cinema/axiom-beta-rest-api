@@ -1,4 +1,4 @@
-// Copyright (C) 2017 Anudit Verma, apertus° Association & contributors
+// Copyright (C) 2017 apertus° Association & contributors
 //
 // This file is part of Axiom Beta Rest Interface.
 //
@@ -17,86 +17,104 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package main
-
+ 
 import (
-	schema "Schema/AxiomDaemon"
-	flatbuffers "github.com/google/flatbuffers/go"
-	"log"
-	"net"
+    schema "Schema/AxiomDaemon"
+    "fmt"
+    flatbuffers "github.com/google/flatbuffers/go"
+    "io"
+    "log"
+    "net"
 )
-
+ 
+// Client for REST API
 type Client struct {
-	socketPath string
-	Builder    *flatbuffers.Builder
-	Settings   []flatbuffers.UOffsetT
-	Socket     net.Conn
+    SocketPath string
+    Builder    *flatbuffers.Builder
+    Settings   []flatbuffers.UOffsetT
+    Socket     net.Conn
 }
-
-func (c *Client) AddSettingIS(mode schema.Mode, imageSensorSetting schema.ImageSensorSettings, parameter uint16) {
-
-	schema.ImageSensorSettingStart(c.Builder)
-	schema.ImageSensorSettingAddMode(c.Builder, schema.ModeWrite)
-	schema.ImageSensorSettingAddSetting(c.Builder, schema.ImageSensorSettingsGain)
-	schema.ImageSensorSettingAddParameter(c.Builder, 0)
-	is := schema.ImageSensorSettingEnd(c.Builder)
-
-	schema.PayloadStart(c.Builder)
-	schema.PayloadAddPayloadType(c.Builder, schema.SettingImageSensorSetting)
-	schema.PayloadAddPayload(c.Builder, is)
-	payloadIS := schema.PayloadEnd(c.Builder)
-	c.Settings = append(c.Settings, payloadIS)
-}
-
-func (c *Client) AddSettingSPI(mode schema.Mode, destination string, SPISetting schema.ConnectionType, payload [2]uint8, payloadLength uint8) {
-
-	schema.SPISettingStart(c.Builder)
-	schema.SPISettingAddMode(c.Builder, schema.ModeWrite)
-	destinationFB := c.Builder.CreateString(destination)
-	schema.SPISettingAddDestination(c.Builder, destinationFB)
-	schema.SPISettingAddConnectionType(c.Builder, schema.ConnectionTypeSPI)
-	c.Builder.StartVector(flatbuffers.SizeUint8, 1, 1)
-	c.Builder.PrependUint8(payload[0])
-	c.Builder.PrependUint8(payload[1])
-	c.Builder.PrependUint8(payloadLength)
-	PayloadFB := c.Builder.EndVector(3)
-
-	schema.SPISettingAddPayload(c.Builder, PayloadFB)
-	schema.SPISettingStartPayloadVector(c.Builder, 1)
-	spi := schema.SPISettingEnd(c.Builder)
-
-	schema.PayloadStart(c.Builder)
-	schema.PayloadAddPayloadType(c.Builder, schema.SettingSPISetting)
-	schema.PayloadAddPayload(c.Builder, spi)
-	payloadSPI := schema.PayloadEnd(c.Builder)
-	c.Settings = append(c.Settings, payloadSPI)
-
-}
-
+ 
+// Init setups client
 func (c *Client) Init() {
-	c.Builder = flatbuffers.NewBuilder(1024)
-	c.Settings = make([]flatbuffers.UOffsetT, 0)
+    c.SocketPath = "/tmp/axiom_daemon"
+    c.SetupSocket()
+ 
+    c.Builder = flatbuffers.NewBuilder(1024)
+    c.Settings = make([]flatbuffers.UOffsetT, 0)
 }
-
+ 
+// reader processes the packages to send
+func reader(r io.Reader) {
+    buf := make([]byte, 1024)
+    for {
+        n, err := r.Read(buf[:])
+        if err != nil {
+            return
+        }
+        println("Client got:", string(buf[0:n]))
+    }
+}
+ 
+// SetupSocket opens the socket connectiont to the daemon
+func (c *Client) SetupSocket() {
+    fmt.Printf("Socket path: %s\n", c.SocketPath)
+    var err error
+    c.Socket, err = net.Dial("unixgram", c.SocketPath)
+ 
+    if err != nil {
+        panic(err)
+    }
+}
+ 
+// TransferData sends added settings to daemon
+func (c *Client) TransferData() {
+    //byteVector := c.Builder.CreateByteVector(c.Settings)
+ 
+    schema.PacketStartSettingsVector(c.Builder, 1)
+    c.Builder.PrependUOffsetT(c.Settings[0])
+    settings := c.Builder.EndVector(1)
+ 
+    schema.PacketStart(c.Builder)
+    schema.PacketAddSettings(c.Builder, settings)
+    p := schema.PacketEnd(c.Builder)
+    c.Builder.Finish(p)
+ 
+    bytes := c.Builder.FinishedBytes()
+   
+    _, err := c.Socket.Write(bytes)
+    if err != nil {
+        log.Fatal("write error:", err)
+    }
+ 
+}
+ 
+// AddSettingIS provides method to add image sensor settings
+// Write/read setting of image sensor
+// Fixed to 2 bytes for now, as CMV used 128 x 2 bytes registers and it should be sufficient for first tests
+func (c *Client) AddSettingIS(mode schema.Mode, imageSensorSetting schema.ImageSensorSettings, parameter uint16) {
+    schema.ImageSensorSettingStart(c.Builder)
+    schema.ImageSensorSettingAddMode(c.Builder, mode)
+    schema.ImageSensorSettingAddSetting(c.Builder, imageSensorSetting)
+    schema.ImageSensorSettingAddParameter(c.Builder, parameter)
+    is := schema.ImageSensorSettingEnd(c.Builder)
+ 
+    schema.PayloadStart(c.Builder)
+    schema.PayloadAddPayloadType(c.Builder, schema.SettingImageSensorSetting)
+    schema.PayloadAddPayload(c.Builder, is)
+    payload := schema.PayloadEnd(c.Builder)
+ 
+    c.Settings = append(c.Settings, payload)
+}
+ 
 func main() {
-	c := new(Client)
-	c.Init()
-	c.AddSettingIS(schema.ModeWrite, schema.ImageSensorSettingsGain, 2) //TEST1
-	schema.PacketStartSettingsVector(c.Builder, 1)
-	c.Builder.PrependUOffsetT(c.Settings[0])
-	settings := c.Builder.EndVector(1)
+    c := new(Client)
+    c.Init()
+ 
+    //c.AddSettingSPI(Mode::Write, )
+    c.AddSettingIS(schema.ModeWrite, schema.ImageSensorSettingsGain, 2)
 
-	schema.PacketStart(c.Builder)
-	schema.PacketAddSettings(c.Builder, settings)
-	p := schema.PacketEnd(c.Builder)
-	c.Builder.Finish(p)
+    c.TransferData()
 
-	c.Builder.Finish(p)
-	bytes := c.Builder.FinishedBytes()
-
-	var socketPath string = "/tmp/axiom_daemon"
-	conn, err := net.Dial("unixgram", socketPath)
-	_, err = conn.Write([]byte(bytes))
-	if err != nil {
-		log.Fatal("write error:", err)
-	}
+    // TODO: Add c.Execute() to process sent settings as bulk
 }
