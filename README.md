@@ -1,2 +1,2 @@
-# axiom-beta-rest-api
-AXIOM Beta REST API Project for GSoC 2017
+# AXIOM Beta REST Interface
+WIP, see develop branch
